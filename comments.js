@@ -1,22 +1,24 @@
-// Create a Web Server
-// Create a new file called comments.js and write the following code:
+// Create web server
+// Create a route for comments
+// Create a route for comments/:id
+// Create a route for comments/:id/delete
 
 const express = require('express');
-const router = express.Router();
-const comments = require('../data/comments');
+const app = express();
+const port = 3000;
 
-router.get('/comments', (req, res) => {
-    res.json(comments);
+app.get('/comments', (req, res) => {
+    res.send('Comments page');
 });
 
-router.get('/comments/:id', (req, res) => {
-    const found = comments.some(comment => comment.id === parseInt(req.params.id));
-
-    if (found) {
-        res.json(comments.filter(comment => comment.id === parseInt(req.params.id)));
-    } else {
-        res.status(400).json({ msg: `No comment with the id of ${req.params.id}` });
-    }
+app.get('/comments/:id', (req, res) => {
+    res.send(`Comment id: ${req.params.id}`);
 });
 
-module.exports = router;
+app.get('/comments/:id/delete', (req, res) => {
+    res.send(`Delete comment id: ${req.params.id}`);
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+});
